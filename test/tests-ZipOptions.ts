@@ -1,5 +1,5 @@
 'use strict';
-import 'jest-extended';
+import {describe, it, expect, afterAll} from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
 import {COMPRESSION_LEVEL, zip} from '../lib/ZipAFolder';
@@ -26,7 +26,7 @@ describe('Zip options coverage', () => {
             compression: COMPRESSION_LEVEL.medium
         });
 
-        expect(fs.existsSync(outZip)).toBeTrue();
+        expect(fs.existsSync(outZip)).toBe(true);
         const stat = fs.statSync(outZip);
         expect(stat.size).toBeGreaterThan(0);
     });
@@ -37,7 +37,7 @@ describe('Zip options coverage', () => {
             compression: COMPRESSION_LEVEL.uncompressed
         });
 
-        expect(fs.existsSync(outZipStore)).toBeTrue();
+        expect(fs.existsSync(outZipStore)).toBe(true);
         const sizeStore = fs.statSync(outZipStore).size;
 
         // Just sanity check: previous compressed zip should not be *smaller* if store is used

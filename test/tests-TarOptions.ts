@@ -1,5 +1,5 @@
 'use strict';
-import 'jest-extended';
+import {describe, it, expect, afterAll} from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
 import {COMPRESSION_LEVEL, tar} from '../lib/ZipAFolder';
@@ -25,7 +25,7 @@ describe('Tar options coverage', () => {
             gzipOptions: {chunkSize: 64 * 1024}
         });
 
-        expect(fs.existsSync(outGz)).toBeTrue();
+        expect(fs.existsSync(outGz)).toBe(true);
         const size = fs.statSync(outGz).size;
         expect(size).toBeGreaterThan(0);
     });
@@ -36,7 +36,7 @@ describe('Tar options coverage', () => {
             compression: COMPRESSION_LEVEL.medium
         });
 
-        expect(fs.existsSync(outPlain)).toBeTrue();
+        expect(fs.existsSync(outPlain)).toBe(true);
         const size = fs.statSync(outPlain).size;
         expect(size).toBeGreaterThan(0);
     });
