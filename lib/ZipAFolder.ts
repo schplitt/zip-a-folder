@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as zlib from 'zlib';
 
-import {FileEntry, TarArchiveOptions, ZipArchiveOptions} from './core/types';
+import {COMPRESSION_LEVELS, FileEntry, TarArchiveOptions, ZipArchiveOptions} from './core/types';
 import {collectEntriesFromDirectory, collectGlobEntries} from './core/FileCollector';
 import {looksLikeGlob} from './core/utils';
 import {NativeZip} from './zip/NativeZip';
@@ -11,6 +11,13 @@ import {NativeTar} from './tar/NativeTar';
 
 export type {ZipArchiveOptions} from './core/types';
 export type {TarArchiveOptions} from './core/types';
+
+
+export const COMPRESSION_LEVEL = {
+    uncompressed: 0,
+    medium: 1,
+    high: 2
+} as const satisfies Record<COMPRESSION_LEVELS, number>
 
 /**
  * High-level facade class that provides ZIP/TAR creation helpers.

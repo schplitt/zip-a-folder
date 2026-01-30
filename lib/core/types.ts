@@ -4,7 +4,7 @@ import * as fs from 'fs';
 /**
  * Compression levels used as convenience presets for zlib/gzip.
  */
-export type COMPRESSION_LEVEL = "uncompressed" | "medium" | "high";
+export type COMPRESSION_LEVELS = "uncompressed" | "medium" | "high";
 
 /**
  * Basic core options shared by ZIP and TAR archives.
@@ -57,7 +57,7 @@ export type ZipArchiveOptions = CoreOptions & {
      *  - uncompressed => store/no compression
      *  - medium/high  => DEFLATE with suitable zlib level
      */
-    compression?: COMPRESSION_LEVEL;
+    compression?: COMPRESSION_LEVELS;
 };
 
 /**
@@ -73,7 +73,7 @@ export type TarArchiveOptions = CoreOptions & {
     customWriteStream?: fs.WriteStream;
 
     /** Convenience compression level, mapped onto gzip level. */
-    compression?: COMPRESSION_LEVEL;
+    compression?: COMPRESSION_LEVELS;
 };
 
 /**
