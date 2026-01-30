@@ -3,13 +3,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as zlib from 'zlib';
 
-import {COMPRESSION_LEVEL, FileEntry, TarArchiveOptions, ZipArchiveOptions} from './core/types';
+import {FileEntry, TarArchiveOptions, ZipArchiveOptions} from './core/types';
 import {collectEntriesFromDirectory, collectGlobEntries} from './core/FileCollector';
 import {looksLikeGlob} from './core/utils';
 import {NativeZip} from './zip/NativeZip';
 import {NativeTar} from './tar/NativeTar';
 
-export {COMPRESSION_LEVEL} from './core/types';
 export type {ZipArchiveOptions} from './core/types';
 export type {TarArchiveOptions} from './core/types';
 
@@ -41,7 +40,7 @@ export class ZipAFolder {
         const statConcurrency = options.statConcurrency ?? 4;
 
         // Resolve compression/store/zlib mapping.
-        const zipStore = options.store === true || options.compression === COMPRESSION_LEVEL.uncompressed;
+        const zipStore = options.store === true || options.compression === "uncompressed";
 
         const zlibOptions: zlib.ZlibOptions | undefined = {
             ...(options.zlib || {})
@@ -49,19 +48,19 @@ export class ZipAFolder {
 
         if (!zipStore && options.compression !== undefined) {
             switch (options.compression) {
-                case COMPRESSION_LEVEL.medium:
+                case "medium":
                     if (zlibOptions.level === undefined) {
                         zlibOptions.level = zlib.constants.Z_DEFAULT_COMPRESSION;
                     }
                     break;
-                case COMPRESSION_LEVEL.high:
+                case "high":
                     if (zlibOptions.level === undefined) {
                         zlibOptions.level = zlib.constants.Z_BEST_COMPRESSION;
                     }
                     break;
                 /* istanbul ignore next */
                 default:
-                    // defensive: invalid compression enum
+                    // defensive: invalid compression value
                     break;
             }
         }
@@ -201,7 +200,7 @@ export class ZipAFolder {
 
         // Determine gzip settings from options + compression level.
         let gzipEnabled = options.gzip;
-        if (options.compression === COMPRESSION_LEVEL.uncompressed) {
+        if (options.compression === "uncompressed") {
             gzipEnabled = false;
         } else if (gzipEnabled === undefined) {
             // Default: gzip if not explicitly disabled and not explicitly uncompressed.
@@ -212,12 +211,12 @@ export class ZipAFolder {
 
         if (gzipEnabled && options.compression !== undefined) {
             switch (options.compression) {
-                case COMPRESSION_LEVEL.medium:
+                case "medium":
                     if (gzipOptions.level === undefined) {
                         gzipOptions.level = zlib.constants.Z_DEFAULT_COMPRESSION;
                     }
                     break;
-                case COMPRESSION_LEVEL.high:
+                case "high":
                     if (gzipOptions.level === undefined) {
                         gzipOptions.level = zlib.constants.Z_BEST_COMPRESSION;
                     }

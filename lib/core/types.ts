@@ -4,11 +4,7 @@ import * as fs from 'fs';
 /**
  * Compression levels used as convenience presets for zlib/gzip.
  */
-export enum COMPRESSION_LEVEL {
-    uncompressed = 0,
-    medium = 1,
-    high = 2
-}
+export type COMPRESSION_LEVEL = "uncompressed" | "medium" | "high";
 
 /**
  * Basic core options shared by ZIP and TAR archives.
